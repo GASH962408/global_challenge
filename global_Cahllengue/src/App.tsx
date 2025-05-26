@@ -1,5 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
-import "./App.css"
+import "./App.css";
+import icon from "./assets/Vector.png";
 
 const GET_CHARACTERS = gql`
   query GetCharacters($page: Int) {
@@ -24,18 +25,22 @@ export default function App() {
   return (
     <div className="App__container">
       <nav className="navbar__container">
-          <h1>Ravn Star Wars</h1>
+        <h1>Ravn Rick and Morty</h1>
       </nav>
-      <main>
-        <h1>Rick and Morty Characters</h1>
-        <ul>
-          {data.characters.results.map((char: any) => (
-            <li key={char.id}>
-              {char.name} - {char.species}
-            </li>
-          ))}
-        </ul>
-      </main>
+
+      <aside className="sidebar__container">
+        <div className="character__container">
+          <div className="character__container__left">
+            <h1>{data.characters.results[0].name}</h1>
+            <span>{data.characters.results[0].species}</span>
+          </div>
+          <div className="character__container__right">
+            <img src={icon} alt="arrow" />
+          </div>
+        </div>
+      </aside>
+
+      <main></main>
     </div>
   );
 }
