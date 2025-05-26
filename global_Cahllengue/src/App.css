@@ -194,8 +194,8 @@ main h1 {
     grid-template-rows: auto auto auto;
     grid-template-areas:
       "navbar"
-      "main"
-      "sidebar";
+      "sidebar"
+      "main";
     height: auto;
   }
 
@@ -226,7 +226,7 @@ main h1 {
     max-width: 50%;
     width: 50%;
   }
-  
+
   .details__row {
     align-items: flex-start;
     height: auto;
@@ -234,11 +234,7 @@ main h1 {
     margin-bottom: 0.75rem;
     margin-top: 1rem;
   }
-
-
-  
 }
-
 
 .skeleton__details {
   display: flex;
@@ -298,12 +294,29 @@ main h1 {
   }
 }
 
-
 .character__container {
   transition: background-color 0.2s ease;
-  cursor: pointer;           
+  cursor: pointer;
 }
 
 .character__container:hover {
-  background-color: rgba(0, 0, 0, 0.05);  
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.sidebar__container.hidden {
+  display: none;
+}
+
+.back__btn {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 0.5rem 0;
+  cursor: pointer;
+}
+
+.back__icon {
+  width: 24px;    
+  height: 24px;
 }

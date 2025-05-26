@@ -3,6 +3,8 @@ import { useRef, useState, useEffect } from "react";
 import "./App.css";
 import icon from "./assets/Vector.png";
 import spinner from "./assets/spinner.png";
+import backIcon from "./assets/back-button.png"; 
+
 
 type Character = {
   id: string;
@@ -52,6 +54,8 @@ export default function App() {
     null
   );
   const [showLoading, setShowLoading] = useState(false);
+  const [showSidebarMobile, setShowSidebarMobile] = useState(true);
+  const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
   const { data, loading, error, fetchMore } = useQuery(GET_CHARACTERS, {
     variables: { page },
@@ -106,44 +110,56 @@ export default function App() {
       <nav className="navbar__container">
         <h1>Ravn Rick and Morty</h1>
       </nav>
-
-      <aside
-        className="sidebar__container"
-        ref={sidebarRef}
-        onScroll={handleScroll}
-      >
-        {error ? (
-          <div className="error__container">
-            <p>Failed to Load Data</p>
-          </div>
-        ) : (
-          <>
-            {characters.map((char) => (
-              <div
-                className="character__container"
-                key={char.id}
-                onClick={() => setSelectedCharacter(char)}
-              >
-                <div className="character__container__left">
-                  <h1>{char.name}</h1>
-                  <span>{char.species}</span>
+      {(!isMobile || showSidebarMobile) && (
+        <aside
+          className="sidebar__container"
+          ref={sidebarRef}
+          onScroll={handleScroll}
+        >
+          {error ? (
+            <div className="error__container">
+              <p>Failed to Load Data</p>
+            </div>
+          ) : (
+            <>
+              {characters.map((char) => (
+                <div
+                  className="character__container"
+                  key={char.id}
+                  onClick={() => {
+                    setSelectedCharacter(char);
+                    if (isMobile) setShowSidebarMobile(false);
+                  }}
+                >
+                  <div className="character__container__left">
+                    <h1>{char.name}</h1>
+                    <span>{char.species}</span>
+                  </div>
+                  <div className="character__container__right">
+                    <img src={icon} alt="arrow" />
+                  </div>
                 </div>
-                <div className="character__container__right">
-                  <img src={icon} alt="arrow" />
+              ))}
+              {showLoading && (
+                <div className="loading__container">
+                  <img src={spinner} alt="spinner" />
+                  <p>Loading</p>
                 </div>
-              </div>
-            ))}
-            {showLoading && (
-              <div className="loading__container">
-                <img src={spinner} alt="spinner" />
-                <p>Loading</p>
-              </div>
-            )}
-          </>
-        )}
-      </aside>
+              )}
+            </>
+          )}
+        </aside>
+      )}
 
       <main className="main__container">
+        {isMobile && !showSidebarMobile && (
+          <button
+            className="back__btn"
+            onClick={() => setShowSidebarMobile(true)}
+          >
+            <img src={backIcon} alt="Back" className="back__icon" />
+          </button>
+        )}
         {loading && !selectedCharacter ? (
           <div className="skeleton__details">
             <div className="skeleton__line short" />
