@@ -14,6 +14,15 @@ const GET_CHARACTERS = gql`
         id
         name
         species
+        status
+        gender
+        image
+        location {
+          name
+        }
+        origin {
+          name
+        }
       }
     }
   }
@@ -23,6 +32,7 @@ export default function App() {
   const [characters, setCharacters] = useState<any[]>([]);
   const [page, setPage] = useState(1);
   const sidebarRef = useRef<HTMLDivElement>(null);
+  const [selectedCharacter, setSelectedCharacter] = useState<any | null>(null);
 
   const { data, loading, error, fetchMore } = useQuery(GET_CHARACTERS, {
     variables: { page },
@@ -52,8 +62,6 @@ export default function App() {
     }
   };
 
-
-
   return (
     <div className="App__container">
       <nav className="navbar__container">
@@ -72,7 +80,11 @@ export default function App() {
         ) : (
           <>
             {characters.map((char) => (
-              <div className="character__container" key={char.id}>
+              <div
+                className="character__container"
+                key={char.id}
+                onClick={() => setSelectedCharacter(char)}
+              >
                 <div className="character__container__left">
                   <h1>{char.name}</h1>
                   <span>{char.species}</span>
@@ -92,8 +104,45 @@ export default function App() {
         )}
       </aside>
 
-      <main>
-        <h1>Selecciona un personaje del sidebar</h1>
+      <main className="main__container">
+        {selectedCharacter ? (
+          <section className="character__details">
+            <div className="details__header">Character Details</div>
+
+            <div className="details__row">
+              <span className="details__label">Name</span>
+              <span className="details__value">{selectedCharacter.name}</span>
+            </div>
+            <div className="details__row">
+              <span className="details__label">Species</span>
+              <span className="details__value">
+                {selectedCharacter.species}
+              </span>
+            </div>
+            <div className="details__row">
+              <span className="details__label">Status</span>
+              <span className="details__value">{selectedCharacter.status}</span>
+            </div>
+            <div className="details__row">
+              <span className="details__label">Gender</span>
+              <span className="details__value">{selectedCharacter.gender}</span>
+            </div>
+            <div className="details__row">
+              <span className="details__label">Location</span>
+              <span className="details__value">
+                {selectedCharacter.location?.name}
+              </span>
+            </div>
+            <div className="details__row">
+              <span className="details__label">Origin</span>
+              <span className="details__value">
+                {selectedCharacter.origin?.name}
+              </span>
+            </div>
+          </section>
+        ) : (
+          <h1>Selecciona un personaje del sidebar</h1>
+        )}
       </main>
     </div>
   );
