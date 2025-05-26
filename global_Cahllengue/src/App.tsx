@@ -23,6 +23,10 @@ const GET_CHARACTERS = gql`
         origin {
           name
         }
+        episode {
+          id
+          name
+        }
       }
     }
   }
@@ -139,9 +143,31 @@ export default function App() {
                 {selectedCharacter.origin?.name}
               </span>
             </div>
+            {selectedCharacter.episode?.length > 0 && (
+              <div className="episodesImage__wrapper">
+                <div className="episodes__column">
+                  <div className="details__header">Episodes</div>
+                  {selectedCharacter.episode.slice(0, 5).map((ep: any) => (
+                    <div className="details__row" key={ep.id}>
+                      <span className="details__value episode__text">
+                        {ep.name}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="image__column">
+                  <img
+                    src={selectedCharacter.image}
+                    alt={selectedCharacter.name}
+                    className="character__image"
+                  />
+                </div>
+              </div>
+            )}
           </section>
         ) : (
-          <h1>Selecciona un personaje del sidebar</h1>
+          <h1>Select a character</h1>
         )}
       </main>
     </div>

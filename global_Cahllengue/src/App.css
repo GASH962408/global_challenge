@@ -71,7 +71,7 @@ body {
 
 main {
   grid-area: main;
-  padding: 0 2rem;
+  padding: 0 100px;
   display: flex;
   justify-content: center;
 }
@@ -121,7 +121,6 @@ main h1 {
 
 
 .character__details {
-  max-width: 890px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -161,3 +160,31 @@ main h1 {
 }
 
 
+
+.episodesImage__wrapper {
+  display: grid;
+  grid-template-columns: 1fr 240px;   
+  margin-top: 1rem;
+  align-items: center;               
+}
+
+
+.episodes__column .episode__text {
+  color: #828282;                    
+}
+
+
+.image__column {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.character__image {
+  width: 100%;
+  max-width: 220px;
+  aspect-ratio: 1 / 1;                
+  object-fit: cover;
+  border-radius: 8px;
+}
