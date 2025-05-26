@@ -176,9 +176,16 @@ export default function App() {
                   <div className="details__header">Episodes</div>
                   {selectedCharacter.episode.slice(0, 5).map((ep: any) => (
                     <div className="details__row" key={ep.id}>
-                      <span className="details__value episode__text">
+                      <a
+                        className="episode__link"
+                        href={`https://rickandmorty.fandom.com/wiki/${encodeURIComponent(
+                          ep.name
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         {ep.name}
-                      </span>
+                      </a>
                     </div>
                   ))}
                 </div>

@@ -5,7 +5,6 @@
   font-family: "Sf Pro Display", sans-serif;
 }
 
-
 .App__container {
   display: grid;
   grid-template-columns: 280px 1fr;
@@ -73,7 +72,6 @@ main {
   justify-content: center;
 }
 
-
 main h1 {
   margin-bottom: 1rem;
 }
@@ -84,7 +82,7 @@ main h1 {
   padding: 1rem;
   color: #666;
   justify-content: center;
-  gap:8px;
+  gap: 8px;
 }
 
 .loading__container img {
@@ -97,7 +95,7 @@ main h1 {
 .loading__container p {
   font-size: 17px;
   font-weight: 700;
-  color:#828282;
+  color: #828282;
 }
 
 @keyframes spin {
@@ -111,11 +109,10 @@ main h1 {
   justify-content: center;
   align-items: start;
   height: 100vh;
-  color: #ef4444; 
-  font-weight:700;
+  color: #ef4444;
+  font-weight: 700;
   font-size: 17px;
 }
-
 
 .character__details {
   width: 100%;
@@ -155,20 +152,16 @@ main h1 {
   font-weight: bold;
 }
 
-
-
 .episodesImage__wrapper {
   display: grid;
-  grid-template-columns: 1fr 240px;   
-  margin-top: 1rem;
-  align-items: center;               
-}
+  grid-template-columns: 1fr 240px;
 
+  align-items: end;
+}
 
 .episodes__column .episode__text {
-  color: #828282;                    
+  color: #828282;
 }
-
 
 .image__column {
   display: flex;
@@ -180,7 +173,68 @@ main h1 {
 .character__image {
   width: 100%;
   max-width: 220px;
-  aspect-ratio: 1 / 1;                
+  aspect-ratio: 1 / 1;
   object-fit: cover;
   border-radius: 8px;
+}
+
+.episode__link {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.episode__link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .App__container {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      "navbar"
+      "main"
+      "sidebar";
+    height: auto;
+  }
+
+  .navbar__container {
+    justify-content: center;
+  }
+
+  .sidebar__container {
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid #ccc;
+  }
+
+  main {
+    padding: 1rem;
+  }
+
+  .episodesImage__wrapper {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .image__column {
+    justify-content: center;
+  }
+
+  .character__image {
+    max-width: 50%;
+    width: 50%;
+  }
+  
+  .details__row {
+    align-items: flex-start;
+    height: auto;
+    gap: 0.25rem;
+    margin-bottom: 0.75rem;
+    margin-top: 1rem;
+  }
+
+
+  
 }
