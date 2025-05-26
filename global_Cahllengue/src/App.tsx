@@ -4,6 +4,18 @@ import "./App.css";
 import icon from "./assets/Vector.png";
 import spinner from "./assets/spinner.png";
 
+type Character = {
+  id: string;
+  name: string;
+  species: string;
+  status: string;
+  gender: string;
+  image: string;
+  location: { name: string };
+  origin: { name: string };
+  episode: { id: string; name: string }[];
+};
+
 const GET_CHARACTERS = gql`
   query GetCharacters($page: Int) {
     characters(page: $page) {
@@ -33,26 +45,26 @@ const GET_CHARACTERS = gql`
 `;
 
 export default function App() {
-  const [characters, setCharacters] = useState<any[]>([]);
-  const [page, setPage] = useState(1);
+  const [characters, setCharacters] = useState<Character[]>([]);
+  const page = 1;
   const sidebarRef = useRef<HTMLDivElement>(null);
-  const [selectedCharacter, setSelectedCharacter] = useState<any | null>(null);
+  const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(
+    null
+  );
   const [showLoading, setShowLoading] = useState(false);
 
   const { data, loading, error, fetchMore } = useQuery(GET_CHARACTERS, {
     variables: { page },
     notifyOnNetworkStatusChange: true,
-
-    onCompleted: (newData) => {
+    onCompleted: (newData: any) => {
       setCharacters((prev) => {
         const incoming = newData.characters.results.filter(
-          (c) => !prev.some((p) => p.id === c.id)
+          (c: Character) => !prev.some((p) => p.id === c.id)
         );
         const updated = [...prev, ...incoming];
         if (!selectedCharacter && updated.length > 0) {
           setSelectedCharacter(updated[0]);
         }
-
         return updated;
       });
     },
@@ -65,7 +77,6 @@ export default function App() {
       const timeout = setTimeout(() => {
         setShowLoading(false);
       }, 300);
-
       return () => clearTimeout(timeout);
     }
   }, [loading]);
@@ -76,15 +87,14 @@ export default function App() {
     if (scrollTop + clientHeight >= scrollHeight - 10) {
       fetchMore({
         variables: { page: data.characters.info.next },
-        updateQuery: (prevResult, { fetchMoreResult }) => {
+        updateQuery: (prevResult, { fetchMoreResult }: any) => {
           if (!fetchMoreResult) return prevResult;
           setCharacters((prev) => {
             const incoming = fetchMoreResult.characters.results.filter(
-              (c) => !prev.some((p) => p.id === c.id)
+              (c: Character) => !prev.some((p) => p.id === c.id)
             );
             return [...prev, ...incoming];
           });
-
           return fetchMoreResult;
         },
       });
@@ -188,7 +198,7 @@ export default function App() {
                 <div className="episodesImage__wrapper">
                   <div className="episodes__column">
                     <div className="details__header">Episodes</div>
-                    {selectedCharacter.episode.slice(0, 5).map((ep: any) => (
+                    {selectedCharacter.episode.slice(0, 5).map((ep) => (
                       <div className="details__row" key={ep.id}>
                         <a
                           className="episode__link"
