@@ -238,3 +238,72 @@ main h1 {
 
   
 }
+
+
+.skeleton__details {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  width: 100%;
+  padding: 1rem;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.skeleton__line.short {
+  width: 40%;
+  height: 20px;
+  background: #e0e0e0;
+  border-radius: 4px;
+}
+
+.skeleton__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.skeleton__label,
+.skeleton__value {
+  height: 20px;
+  background: #e0e0e0;
+  border-radius: 4px;
+}
+
+.skeleton__label {
+  width: 30%;
+}
+
+.skeleton__value {
+  width: 60%;
+}
+
+.skeleton__image {
+  width: 220px;
+  height: 220px;
+  border-radius: 8px;
+  background: #e0e0e0;
+  margin-top: 1rem;
+  align-self: center;
+}
+
+@keyframes pulse {
+  0% {
+    background-color: #f0f0f0;
+  }
+  50% {
+    background-color: #e0e0e0;
+  }
+  100% {
+    background-color: #f0f0f0;
+  }
+}
+
+
+.character__container {
+  transition: background-color 0.2s ease;
+  cursor: pointer;           
+}
+
+.character__container:hover {
+  background-color: rgba(0, 0, 0, 0.05);  
+}
