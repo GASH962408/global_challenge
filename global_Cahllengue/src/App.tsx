@@ -1,5 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import "./App.css";
 import icon from "./assets/Vector.png";
 import spinner from "./assets/spinner.png";
@@ -37,14 +37,38 @@ export default function App() {
   const [page, setPage] = useState(1);
   const sidebarRef = useRef<HTMLDivElement>(null);
   const [selectedCharacter, setSelectedCharacter] = useState<any | null>(null);
+  const [showLoading, setShowLoading] = useState(false);
 
   const { data, loading, error, fetchMore } = useQuery(GET_CHARACTERS, {
     variables: { page },
     notifyOnNetworkStatusChange: true,
+
     onCompleted: (newData) => {
-      setCharacters((prev) => [...prev, ...newData.characters.results]);
+      setCharacters((prev) => {
+        const incoming = newData.characters.results.filter(
+          (c) => !prev.some((p) => p.id === c.id)
+        );
+        const updated = [...prev, ...incoming];
+        if (!selectedCharacter && updated.length > 0) {
+          setSelectedCharacter(updated[0]);
+        }
+
+        return updated;
+      });
     },
   });
+
+  useEffect(() => {
+    if (loading) {
+      setShowLoading(true);
+    } else {
+      const timeout = setTimeout(() => {
+        setShowLoading(false);
+      }, 300);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [loading]);
 
   const handleScroll = () => {
     if (!sidebarRef.current || loading || !data?.characters?.info?.next) return;
@@ -56,10 +80,13 @@ export default function App() {
         variables: { page: data.characters.info.next },
         updateQuery: (prevResult, { fetchMoreResult }) => {
           if (!fetchMoreResult) return prevResult;
-          setCharacters((prev) => [
-            ...prev,
-            ...fetchMoreResult.characters.results,
-          ]);
+          setCharacters((prev) => {
+            const incoming = fetchMoreResult.characters.results.filter(
+              (c) => !prev.some((p) => p.id === c.id)
+            );
+            return [...prev, ...incoming];
+          });
+
           return fetchMoreResult;
         },
       });
@@ -98,7 +125,7 @@ export default function App() {
                 </div>
               </div>
             ))}
-            {loading && (
+            {showLoading && (
               <div className="loading__container">
                 <img src={spinner} alt="spinner" />
                 <p>Loading</p>
@@ -109,7 +136,7 @@ export default function App() {
       </aside>
 
       <main className="main__container">
-        {selectedCharacter ? (
+        {selectedCharacter && (
           <section className="character__details">
             <div className="details__header">Character Details</div>
 
@@ -166,8 +193,6 @@ export default function App() {
               </div>
             )}
           </section>
-        ) : (
-          <h1>Select a character</h1>
         )}
       </main>
     </div>
