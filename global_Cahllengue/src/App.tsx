@@ -3,8 +3,7 @@ import { useRef, useState, useEffect } from "react";
 import "./App.css";
 import icon from "./assets/Vector.png";
 import spinner from "./assets/spinner.png";
-import backIcon from "./assets/back-button.png"; 
-
+import backIcon from "./assets/back.png";
 
 type Character = {
   id: string;
@@ -108,6 +107,14 @@ export default function App() {
   return (
     <div className="App__container">
       <nav className="navbar__container">
+        {isMobile && !showSidebarMobile && (
+          <button
+            className="back__btn"
+            onClick={() => setShowSidebarMobile(true)}
+          >
+            <img src={backIcon} alt="Back" className="back__icon" />
+          </button>
+        )}
         <h1>Ravn Rick and Morty</h1>
       </nav>
       {(!isMobile || showSidebarMobile) && (
@@ -152,14 +159,6 @@ export default function App() {
       )}
 
       <main className="main__container">
-        {isMobile && !showSidebarMobile && (
-          <button
-            className="back__btn"
-            onClick={() => setShowSidebarMobile(true)}
-          >
-            <img src={backIcon} alt="Back" className="back__icon" />
-          </button>
-        )}
         {loading && !selectedCharacter ? (
           <div className="skeleton__details">
             <div className="skeleton__line short" />
