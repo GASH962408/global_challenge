@@ -115,17 +115,7 @@ export default function App() {
             <img src={backIcon} alt="Back" className="back__icon" />
           </button>
         )}
-        <h1>Ravn Rick and Morty</h1>
-        <h1>Alonso created this </h1>
-        <h1>And this is a new change asdasdasd </h1>
-        <h1>And this is a new change asdasdasd </h1>
-        <h1>And this is a new change asdasdasd </h1>
-        <h1>Gustavo created this </h1>
-        <h1>Gustavo created this </h1>
-        <h1>Gustavo created this </h1>
-        <h1>Gustavo created this </h1>
-        <h1>Gustavo created this </h1>
-        <h1>Gustavo created this </h1>
+        <h1>Ravn Rick and Morty</h1
 
       </nav>
       {(!isMobile || showSidebarMobile) && (
