@@ -120,6 +120,13 @@ export default function App() {
         <h1>And this is a new change asdasdasd </h1>
         <h1>And this is a new change asdasdasd </h1>
         <h1>And this is a new change asdasdasd </h1>
+        <h1>Gustavo created this </h1>
+        <h1>Gustavo created this </h1>
+        <h1>Gustavo created this </h1>
+        <h1>Gustavo created this </h1>
+        <h1>Gustavo created this </h1>
+        <h1>Gustavo created this </h1>
+
       </nav>
       {(!isMobile || showSidebarMobile) && (
         <aside
