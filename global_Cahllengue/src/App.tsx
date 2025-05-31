@@ -117,6 +117,7 @@ export default function App() {
         )}
         <h1>Ravn Rick and Morty</h1>
         <h1>Alonso created this </h1>
+        <span>this is gustavo create conflict</span>
       </nav>
       {(!isMobile || showSidebarMobile) && (
         <aside
